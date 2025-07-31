@@ -1,44 +1,37 @@
-{  "home": {
-    "title": "Smart Mess Management",
+{
+  "navbar": {
+    "home": "Home",
+    "menu": "Menu",
+    "feedback": "Feedback",
+    "notes": "Notes Board",
+    "snackboard": "Snack Board",
+    "rules": "Rules",
+    "staff": "Staff Directory",
+    "contact": "Contact Us",
+    "dashboard": "Dashboard",
+    "admin": "Admin Panel",
+    "gallery": "Gallery",
+    "login": "Login",
+    "logout": "Logout",
+    "translate": "Language",
+    "theme": "Toggle Theme"
+  },
+  "home": {
+    "title": "Welcome to MIT Mess Management",
+    "description": "Manage your mess efficiently.",
     "meal_count": "Today's Meal Count",
-    "breakfast": "Breakfast",
-    "lunch": "Lunch",
-    "dinner": "Dinner",
     "menu": "Today's Menu"
   },
   "login": {
-    "title": "Student Login",
-    "id": "Student ID",
+    "title": "Login",
+    "username": "Username",
     "password": "Password",
     "submit": "Login"
   },
   "feedback": {
-    "title": "Meal Feedback",
-    "meal_type": "Meal Type",
-    "feedback": "Your Feedback",
-    "submit": "Submit"
-  },
-  "snacks": {
-    "title": "Snack Board",
-    "name": "Snack Name",
-    "price": "Price"
-  },
-  "rules": {
-    "title": "Mess Rules & Regulations"
-  },
-  "gallery": {
-    "title": "Mess Gallery"
-  },
-  "staff": {
-    "title": "Staff Directory",
-    "name": "Name",
-    "role": "Role",
-    "contact": "Contact"
-  },
-  "language": {
-    "switch": "Switch Language",
-    "en": "English",
-    "hi": "Hindi",
-    "mr": "Marathi"
+    "title": "Submit Feedback",
+    "rating": "Rating",
+    "comment": "Comment",
+    "submit": "Submit Feedback"
   }
 }

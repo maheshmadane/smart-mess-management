@@ -1,57 +1,50 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Login() {
   const { t } = useTranslation();
-  const [studentId, setStudentId] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:8000/api/students/login/', {
-        student_id: studentId,
-        password,
-      });
-      // Store token or handle login success
-      alert('Login successful');
-    } catch (err) {
-      setError('Invalid credentials');
+    if (credentials.username && credentials.password) {
+      // Simulate login (replace with actual API call)
+      toast.success('Login successful');
+      navigate('/dashboard');
+    } else {
+      toast.error('Please fill in all fields');
     }
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-md">
-      <h2 className="text-2xl font-bold mb-4">{t('login.title')}</h2>
-      <div className="bg-white p-6 rounded shadow">
+    <div className="max-w-md mx-auto mt-10 p-6 bg-secondary rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold mb-4">{t('login.title')}</h1>
+      <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block mb-2">{t('login.id')}</label>
+          <label className="block mb-1">{t('login.username')}</label>
           <input
             type="text"
-            value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            value={credentials.username}
+            onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
             className="w-full p-2 border rounded"
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2">{t('login.password')}</label>
+          <label className="block mb-1">{t('login.password')}</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={credentials.password}
+            onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
             className="w-full p-2 border rounded"
           />
         </div>
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white p-2 rounded w-full"
-        >
+        <button type="submit" className="w-full bg-accent text-white p-2 rounded hover:bg-hover">
           {t('login.submit')}
         </button>
-      </div>
+      </form>
     </div>
   );
 }
