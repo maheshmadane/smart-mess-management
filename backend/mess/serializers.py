@@ -1,37 +1,54 @@
 from rest_framework import serializers
-from .models import Student, MealAttendance, SnackItem, Feedback, ImageGallery, Staff, MenuBoard
+from .models import Student, MealAttendance, SnackItem, Feedback, ImageGallery, Staff, MenuBoard, Note, Rule
+
+from rest_framework import serializers
+from .models import Student
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['student_id', 'name', 'class_name', 'email', 'language']
+        fields = ['id', 'name', 'email', 'phone_number']
 
 class MealAttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = MealAttendance
-        fields = ['id', 'student', 'date', 'breakfast', 'lunch', 'dinner', 'reason']
+        fields = ['id', 'student', 'date', 'meal_type', 'present']
 
 class SnackItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = SnackItem
-        fields = ['snack_id', 'name', 'price', 'date']
+        fields = ['id', 'name', 'price', 'date']
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        fields = ['id', 'student', 'meal_type', 'feedback_text', 'date']
+        fields = ['id', 'student', 'rating', 'comment', 'created_at']
 
 class ImageGallerySerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageGallery
-        fields = ['id', 'image_url', 'category']
+        fields = ['id', 'photo', 'caption']
 
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = ['staff_id', 'name', 'role', 'contact']
+        fields = ['id', 'name', 'role', 'email', 'phone', 'photo']
 
 class MenuBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuBoard
-        fields = ['id', 'date', 'meal_type', 'items']
+        fields = ['id', 'date', 'items']
+
+class NoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Note
+        fields = ['id', 'content', 'created_at']
+
+class RuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rule
+        fields = ['id', 'title', 'description']
+
+class DailySummarySerializer(serializers.Serializer):
+    total_attendance = serializers.IntegerField()
+    menu = serializers.CharField()

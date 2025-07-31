@@ -1,34 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Student(models.Model):
-    student_id = models.CharField(max_length=50, primary_key=True)
     name = models.CharField(max_length=100)
-    class_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
-    language = models.CharField(max_length=10, default='en')
-
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class MealAttendance(models.Model):
-    ATTENDANCE_CHOICES = [
-        ('Yes', 'Yes'),
-        ('No', 'No'),
-    ]
-    id = models.AutoField(primary_key=True)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date = models.DateField()
-    breakfast = models.CharField(max_length=3, choices=ATTENDANCE_CHOICES, default='No')
-    lunch = models.CharField(max_length=3, choices=ATTENDANCE_CHOICES, default='No')
-    dinner = models.CharField(max_length=3, choices=ATTENDANCE_CHOICES, default='No')
-    reason = models.TextField(blank=True, null=True)
+    meal_type = models.CharField(max_length=50)
+    present = models.BooleanField(default=False)
 
-    class Meta:
-        unique_together = ('student', 'date')
+    def __str__(self):
+        return f"{self.student.user.username} - {self.date} - {self.meal_type}"
 
 class SnackItem(models.Model):
-    snack_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     date = models.DateField()
@@ -37,47 +26,50 @@ class SnackItem(models.Model):
         return self.name
 
 class Feedback(models.Model):
-    MEAL_TYPES = [
-        ('Breakfast', 'Breakfast'),
-        ('Lunch', 'Lunch'),
-        ('Dinner', 'Dinner'),
-    ]
-    id = models.AutoField(primary_key=True)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    meal_type = models.CharField(max_length=20, choices=MEAL_TYPES)
-    feedback_text = models.TextField()
-    date = models.DateField()
-
-class ImageGallery(models.Model):
-    CATEGORIES = [
-        ('Storage', 'Storage Room'),
-        ('Kitchen', 'Kitchen'),
-        ('Counter', 'Food Counter'),
-        ('Dining', 'Dining Area'),
-    ]
-    id = models.AutoField(primary_key=True)
-    image_url = models.CharField(max_length=200)
-    category = models.CharField(max_length=20, choices=CATEGORIES)
-
-class Staff(models.Model):
-    staff_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    role = models.CharField(max_length=50)
-    contact = models.CharField(max_length=100)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    rating = models.IntegerField()
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} ({self.role})"
+        return f"{self.rating} stars by {self.student.user.username if self.student else 'Anonymous'}"
+
+class ImageGallery(models.Model):
+    photo = models.ImageField(upload_to='gallery/', null=True, blank=True)
+    caption = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.caption
+
+class Staff(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    photo = models.ImageField(upload_to='staff/', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
 
 class MenuBoard(models.Model):
-    MEAL_TYPES = [
-        ('Breakfast', 'Breakfast'),
-        ('Lunch', 'Lunch'),
-        ('Dinner', 'Dinner'),
-    ]
-    id = models.AutoField(primary_key=True)
     date = models.DateField()
-    meal_type = models.CharField(max_length=20, choices=MEAL_TYPES)
-    items = models.TextField()
+    meal_type = models.CharField(max_length=50)
+    dishes = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        unique_together = ('date', 'meal_type')
+    def __str__(self):
+        return f"{self.date} - {self.meal_type}"
+
+class Note(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content[:50]
+
+class Rule(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
