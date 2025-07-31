@@ -1,0 +1,44 @@
+{  "home": {
+    "title": "Smart Mess Management",
+    "meal_count": "Today's Meal Count",
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "menu": "Today's Menu"
+  },
+  "login": {
+    "title": "Student Login",
+    "id": "Student ID",
+    "password": "Password",
+    "submit": "Login"
+  },
+  "feedback": {
+    "title": "Meal Feedback",
+    "meal_type": "Meal Type",
+    "feedback": "Your Feedback",
+    "submit": "Submit"
+  },
+  "snacks": {
+    "title": "Snack Board",
+    "name": "Snack Name",
+    "price": "Price"
+  },
+  "rules": {
+    "title": "Mess Rules & Regulations"
+  },
+  "gallery": {
+    "title": "Mess Gallery"
+  },
+  "staff": {
+    "title": "Staff Directory",
+    "name": "Name",
+    "role": "Role",
+    "contact": "Contact"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "en": "English",
+    "hi": "Hindi",
+    "mr": "Marathi"
+  }
+}
