@@ -1,49 +1,46 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Home from './components/Home';
-import AdminDashboard from './components/AdminDashboard';
-import SnackBoard from './components/SnackBoard';
-import FeedbackForm from './components/FeedbackForm';
 import Login from './components/Login';
 import Rules from './components/Rules';
-import Gallery from './components/Gallery';
+import SnackBoard from './components/SnackBoard';
 import StaffDirectory from './components/StaffDirectory';
+import Menu from './components/Menu';
+import Feedback from './components/Feedback';
+import NotesBoard from './components/NotesBoard';
+import ContactUs from './components/ContactUs';
+import StudentDashboard from './components/StudentDashboard';
+import AdminPanel from './components/AdminPanel';
+import Gallery from './components/Gallery';
 
 function App() {
-  const { t, i18n } = useTranslation();
+  const [theme, setTheme] = useState('light');
 
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
 
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        <nav className="bg-blue-600 p-4 text-white">
-          <div className="container mx-auto flex justify-between">
-            <h1 className="text-2xl">{t('home.title')}</h1>
-            <div>
-              <select onChange={(e) => changeLanguage(e.target.value)} className="bg-blue-700 p-2 rounded text-white">
-                <option value="en">{t('language.en')}</option>
-                <option value="hi">{t('language.hi')}</option>
-                <option value="mr">{t('language.mr')}</option>
-              </select>
-            </div>
-          </div>
-        </nav>
+    <div className="min-h-screen">
+      <Navbar theme={theme} setTheme={setTheme} />
+      <div className="container mx-auto p-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/snacks" element={<SnackBoard />} />
-          <Route path="/feedback" element={<FeedbackForm />} />
           <Route path="/login" element={<Login />} />
           <Route path="/rules" element={<Rules />} />
-          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/snackboard" element={<SnackBoard />} />
           <Route path="/staff" element={<StaffDirectory />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/notes" element={<NotesBoard />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/dashboard" element={<StudentDashboard />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </div>
-    </Router>
+    </div>
   );
 }
 
